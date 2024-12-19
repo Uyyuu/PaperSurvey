@@ -4,18 +4,15 @@ from notion_client import Client
 
 load_dotenv()
 
-NOTION_TOKEN = os.environ.get("NOTION_TOKEN")
-NOTION_DB_ID = os.environ.get("NOTION_DB_ID")
-
 # queryからそのデータベースの構造を取得して自動でテンプレート化できるようにしたい。
 class NotionRepository:
     def __init__(self, * ,token: str=None, db_id: str=None):
         if not token:
-            token = NOTION_TOKEN
+            token = os.environ.get("NOTION_TOKEN")
         self.notion = Client(auth=token)
 
         if not db_id:
-            self.database_id = NOTION_DB_ID
+            self.database_id = os.environ.get("NOTION_DB_ID")
     
     def create_markdown_page(self, title, markdown_content):
         """
